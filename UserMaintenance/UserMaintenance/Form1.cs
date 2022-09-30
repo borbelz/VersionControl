@@ -24,10 +24,15 @@ namespace UserMaintenance
 
             listBox1.DataSource = users;
             listBox1.ValueMember = "ID";
-            listBox1.DisplayMember = "Name";
+            listBox1.DisplayMember = "FullName";
         }
 
         private void button2_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
             var u = new User()
             {
