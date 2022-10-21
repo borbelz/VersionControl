@@ -20,10 +20,7 @@ namespace _5gyak_GJYYX0
         public Form1()
         {
             InitializeComponent();
-            EURExchangeRates();
-            GetXml();
-
-            dgv1.DataSource = Rates;
+            RefreshData();
         }
 
         public void EURExchangeRates()
@@ -32,20 +29,19 @@ namespace _5gyak_GJYYX0
 
             var request = new GetExchangeRatesRequestBody()
             {
-                currencyNames = "EUR",
-                startDate = "2020-01-01",
-                endDate = "2020-06-30"
+                currencyNames = comboBox1.SelectedItem.ToString(),
+                startDate = dateTimePicker1.Value.ToString(),
+                endDate = dateTimePicker2.Value.ToString()
             };
 
             var response = mnbService.GetExchangeRates(request);
 
             var result = response.GetExchangeRatesResult;
-        }
 
-        public void GetXml()
-        {
             var xml = new XmlDocument();
             xml.LoadXml(result);
+
+            //Xml feldolgozása
 
             foreach (XmlElement element in xml.DocumentElement)
             {
@@ -62,6 +58,7 @@ namespace _5gyak_GJYYX0
                 if (unit != 0) rate.Value = value / unit;
             }
         }
+
 
         public void MakeDiagram()
         {
@@ -80,6 +77,30 @@ namespace _5gyak_GJYYX0
             chartArea.AxisX.MajorGrid.Enabled = false;
             chartArea.AxisY.MajorGrid.Enabled = false;
             chartArea.AxisY.IsStartedFromZero = false;
+        }
+
+        public void RefreshData()
+        {
+            Rates.Clear();
+            EURExchangeRates();
+            MakeDiagram();
+
+            dgv1.DataSource = Rates;
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshData();
         }
     }
 }
