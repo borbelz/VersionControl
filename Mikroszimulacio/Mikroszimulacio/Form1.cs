@@ -43,5 +43,46 @@ namespace Mikroszimulacio
             } 
             return population;
         }
+
+        public List<BirthProbability> GetBirthProbabilities(string csvpath)
+        {
+            List<BirthProbability> bprobability = new List<BirthProbability>();
+
+            using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
+            {
+                while (!sr.EndOfStream)
+                {
+                    var line = sr.ReadLine().Split(';');
+                    bprobability.Add(new BirthProbability()
+                    {
+                        Age = int.Parse(line[0]),
+                        NumberOfChildren = byte.Parse(line[1])
+                    });
+                }
+            }
+
+            return bprobability;
+        }
+
+
+        public List<DeathProbability> GetDeathProbabilities(string csvpath)
+        {
+            List<DeathProbability> dprobability = new List<DeathProbability>();
+
+            using (StreamReader sr = new StreamReader(csvpath, Encoding.Default))
+            {
+                while (!sr.EndOfStream)
+                {
+                    var line = sr.ReadLine().Split(';');
+                    dprobability.Add(new DeathProbability()
+                    {
+                        Sex = line[0],
+                        Age = int.Parse(line[1])
+                    });
+                }
+            }
+
+            return dprobability;
+        }
     }
 }
