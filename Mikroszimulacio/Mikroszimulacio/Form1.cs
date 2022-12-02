@@ -27,26 +27,6 @@ namespace Mikroszimulacio
             Population = GetPopulation(@"C:\Temp\nép.csv");
             BirthProbability = GetBirthProbabilities(@"C:\Temp\születés.csv");
             DeathProbability = GetDeathProbabilities(@"C:\Temp\halál.csv");
-
-            for (int year = 2005; year <= 2024; year++)
-            {
-                for (int i = 0; i < Population.Count; i++)
-                {
-                    SimStep(year);
-                }
-
-                int nbrOfMales = (from x in Population
-                                    where x.Gender == Gender.Male && x.IsAlive
-                                    select x).Count();
-
-                int nbrOfFemales = (from x in Population
-                                    where x.Gender == Gender.Female && x.IsAlive
-                                    select x).Count();
-
-                Console.WriteLine(
-                    string.Format("Év:{0} Fiúk:{1} Lányok:{2}", year, nbrOfMales, nbrOfFemales));
-
-            }
         }
 
         private void SimStep(int year, Person person)
@@ -138,6 +118,31 @@ namespace Mikroszimulacio
             }
 
             return dprobability;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            for (int year = 2005; year <= 2024; year++)
+            {
+                for (int i = 0; i < Population.Count; i++)
+                {
+                    SimStep(year, person);
+                }
+
+                int nbrOfMales = (from x in Population
+                                  where x.Gender == Gender.Male && x.IsAlive
+                                  select x).Count();
+
+                int nbrOfFemales = (from x in Population
+                                    where x.Gender == Gender.Female && x.IsAlive
+                                    select x).Count();
+
+                Console.WriteLine(
+                    string.Format("Év:{0} Fiúk:{1} Lányok:{2}", year, nbrOfMales, nbrOfFemales));
+
+            }
+
+            
         }
     }
 }
