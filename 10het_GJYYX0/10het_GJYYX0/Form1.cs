@@ -11,6 +11,7 @@ using WorldsHardestGame;
 
 namespace _10het_GJYYX0
 {
+    
     public partial class Form1 : Form
     {
         GameController gc = new GameController();
@@ -42,7 +43,7 @@ namespace _10het_GJYYX0
             }
             gc.Start();
 
-            
+            button1.Visible = false;
 
         }
 
@@ -85,6 +86,7 @@ namespace _10het_GJYYX0
             {
                 winnerBrain = winners.FirstOrDefault().Brain.Clone();
                 gc.GameOver -= Gc_GameOver;
+                button1.Visible = true;
                 return;
             }
 
